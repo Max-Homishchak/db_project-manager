@@ -318,3 +318,344 @@ COMMIT;
 ```
 
 ## RESTfull сервіс для управління даними
+
+### Клас запуску проекту
+
+```java
+@SpringBootApplication
+public class FlowlyApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(FlowlyApplication.class, args);
+	}
+
+}
+```
+
+### Апі контролер для комунікації з функіоналом для користувачів 
+
+```java
+@RestController
+@RequestMapping("/api/v1/users")
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Long> registerUser(@RequestBody RegisterRequest request) {
+        return new ResponseEntity<>(userService.registerUser(request), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Long> updateUser(@RequestBody UserUpdateRequest request) {
+        return new ResponseEntity<>(userService.updateUser(request), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+    }
+}
+```
+
+### Апі контролер для комунікації з функіоналом для завдань
+```java
+@RestController
+@RequestMapping("/api/v1/tasks")
+public class TaskController {
+
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    @PostMapping
+    public Long createTask(@RequestBody TaskCreationRequest request) {
+        return taskService.createTask(request);
+    }
+
+    @PutMapping
+    public Long updateTask(@RequestBody TaskUpdateRequest request) {
+        return taskService.updateTask(request);
+    }
+
+    @DeleteMapping("/{taskId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTask(taskId);
+    }
+}
+```
+
+### Ексепшини проекта
+```java
+public class IncorrectOldPasswordValidationException extends RuntimeException {
+    public IncorrectOldPasswordValidationException(String message) {
+        super(message);
+    }
+}
+
+public class TaskNotFoundException extends RuntimeException {
+    public TaskNotFoundException(String message) {
+        super(message);
+    }
+}
+
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+}
+```
+
+### Реквести та респонси
+
+```java
+public record RegisterRequest(String username, String password) {
+}
+
+public record UserUpdateRequest(Long userId, String username, String newPassword) {
+}
+
+public record TaskCreationRequest(String title, String description, Long reporterId, Long assigneeId) {
+}
+
+public record TaskUpdateRequest(Long taskId, String title, String description, Long assigneeId) {
+}
+```
+
+### Обєкти головних сутностей в базі даних 
+
+```java
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class Task {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+    private String description;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private User reporter;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private User assignees;
+
+    @OneToMany
+    private Set<TaskComment> comments;
+}
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class TaskComment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String message;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Task task;
+}
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@Table(name = "users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+    private String password;
+
+    @OneToMany(mappedBy = "reporter")
+    private Set<Task> reportedTasks;
+
+    @ManyToMany
+    private Set<Task> assignedTasks;
+}
+```
+
+### Репозиторії для комунікації з бд
+
+```java
+public interface TaskRepository extends JpaRepository<Task, Long> {
+}
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+```
+
+### Сервіс для бізнес логіки щодо користувачів
+
+```java
+public interface UserService {
+    User getUserById(Long userId);
+    Long registerUser(RegisterRequest request);
+    Long updateUser(UserUpdateRequest request);
+    void deleteUser(Long userId);
+}
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final ValidatorService validatorService;
+
+    public UserServiceImpl(UserRepository userRepository, ValidatorService validatorService) {
+        this.userRepository = userRepository;
+        this.validatorService = validatorService;
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return getUserOrThrowException(userId);
+    }
+
+    @Override
+    public Long registerUser(RegisterRequest request) {
+        User user = User.builder()
+                .username(request.username())
+                .password(request.password()) // should be encrypted
+                .build();
+
+        return userRepository.save(user).getId();
+    }
+
+    @Override
+    public Long updateUser(UserUpdateRequest request) {
+        User userToBeUpdated = getUserOrThrowException(request.userId());
+
+        if (validatorService.validateOldUserPassword(userToBeUpdated, request.newPassword())) {
+            throw new IncorrectOldPasswordValidationException("You have entered incorrect old password");
+        }
+
+        userToBeUpdated.setUsername(request.username());
+        userToBeUpdated.setPassword(request.newPassword());
+        return userRepository.save(userToBeUpdated).getId();
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    private User getUserOrThrowException(Long userId) {
+        return userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException(String.format("User with id:%d was not found", userId)));
+    }
+}
+```
+
+### Сервіс для бізнес логіки щодо завдань
+
+```java
+public interface TaskService {
+    Long createTask(TaskCreationRequest request);
+    Long updateTask(TaskUpdateRequest request);
+    void deleteTask(Long taskId);
+}
+@Service
+public class TaskServiceImpl implements TaskService {
+
+    private final TaskRepository taskRepository;
+    private final UserService userService;
+
+    public TaskServiceImpl(TaskRepository taskRepository, UserService userService) {
+        this.taskRepository = taskRepository;
+        this.userService    = userService;
+    }
+
+    @Override
+    public Long createTask(TaskCreationRequest request) {
+        User reporter = userService.getUserById(request.reporterId());
+        User assignee = userService.getUserById(request.assigneeId());
+
+        Task taskToBeCreated = Task.builder()
+                .title(request.title())
+                .description(request.description())
+                .reporter(reporter)
+                .assignees(assignee)
+                .build();
+
+        return taskRepository.save(taskToBeCreated).getId();
+    }
+
+    @Override
+    public Long updateTask(TaskUpdateRequest request) {
+        Task taskToBeUpdated = getTaskOrThrowException(request.taskId());
+        User assignedUser = userService.getUserById(request.assigneeId());
+
+        taskToBeUpdated.setDescription(request.description());
+        taskToBeUpdated.setAssignees(assignedUser);
+        taskToBeUpdated.setTitle(request.title());
+        return taskRepository.save(taskToBeUpdated).getId();
+    }
+
+    @Override
+    public void deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
+    }
+
+    private Task getTaskOrThrowException(Long taskId) {
+        return taskRepository.findById(taskId).orElseThrow(
+                () -> new TaskNotFoundException(String.format("Task with id:%d was not found", taskId)));
+    }
+}
+```
+
+### Валідатор
+```java
+public interface ValidatorService {
+    boolean validateOldUserPassword(User user, String newPassword);
+}
+
+@Service
+public class ValidatorServiceImpl implements ValidatorService {
+    @Override
+    public boolean validateOldUserPassword(User user, String newPassword) {
+        String hashedPassword = newPassword;
+        return hashedPassword.equals(user.getPassword());
+    }
+}
+```
+
+### Конфігурація бази даних
+
+```yaml
+spring:
+    datasource:
+        url: "jdbc:postgresql://localhost:5432/max"
+        username: "postgres"
+        password: "1111"
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: "org.hibernate.dialect.PostgreSQLDialect"
+                format_sql: false
+                globally_quoted_identifiers: true
+```
