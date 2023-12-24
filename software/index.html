@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Реалізація інформаційного та програмного забезпечення | 4. Система управління проектами</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/db_project-manager/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="description" content="Лабораторні роботи з дисципліни &quot;Організація баз даних&quot;">
+    
+    <link rel="preload" href="/db_project-manager/assets/css/0.styles.9f24b5cb.css" as="style"><link rel="preload" href="/db_project-manager/assets/js/app.ef185940.js" as="script"><link rel="preload" href="/db_project-manager/assets/js/2.719a43ec.js" as="script"><link rel="preload" href="/db_project-manager/assets/js/1.a1a589e3.js" as="script"><link rel="preload" href="/db_project-manager/assets/js/38.c9dbd3bf.js" as="script"><link rel="prefetch" href="/db_project-manager/assets/js/10.c3075cff.js"><link rel="prefetch" href="/db_project-manager/assets/js/13.3ab671eb.js"><link rel="prefetch" href="/db_project-manager/assets/js/14.5b2de81e.js"><link rel="prefetch" href="/db_project-manager/assets/js/15.83575e7c.js"><link rel="prefetch" href="/db_project-manager/assets/js/16.768b2f65.js"><link rel="prefetch" href="/db_project-manager/assets/js/17.12025469.js"><link rel="prefetch" href="/db_project-manager/assets/js/18.17d7d4c7.js"><link rel="prefetch" href="/db_project-manager/assets/js/19.cf4c0059.js"><link rel="prefetch" href="/db_project-manager/assets/js/20.56811147.js"><link rel="prefetch" href="/db_project-manager/assets/js/21.9840ee13.js"><link rel="prefetch" href="/db_project-manager/assets/js/22.04214989.js"><link rel="prefetch" href="/db_project-manager/assets/js/23.d04f800f.js"><link rel="prefetch" href="/db_project-manager/assets/js/24.c6e1dfb1.js"><link rel="prefetch" href="/db_project-manager/assets/js/25.acae8e0e.js"><link rel="prefetch" href="/db_project-manager/assets/js/26.2ced7144.js"><link rel="prefetch" href="/db_project-manager/assets/js/27.ea368885.js"><link rel="prefetch" href="/db_project-manager/assets/js/28.ebe252ba.js"><link rel="prefetch" href="/db_project-manager/assets/js/29.0b7ce706.js"><link rel="prefetch" href="/db_project-manager/assets/js/3.b08aed10.js"><link rel="prefetch" href="/db_project-manager/assets/js/30.14bb99e0.js"><link rel="prefetch" href="/db_project-manager/assets/js/31.0cd9ce7d.js"><link rel="prefetch" href="/db_project-manager/assets/js/32.4debd36f.js"><link rel="prefetch" href="/db_project-manager/assets/js/33.82f74ec7.js"><link rel="prefetch" href="/db_project-manager/assets/js/34.a43e87a3.js"><link rel="prefetch" href="/db_project-manager/assets/js/35.302bb8e9.js"><link rel="prefetch" href="/db_project-manager/assets/js/36.bcc2ad0f.js"><link rel="prefetch" href="/db_project-manager/assets/js/37.58dc1e88.js"><link rel="prefetch" href="/db_project-manager/assets/js/39.faf93294.js"><link rel="prefetch" href="/db_project-manager/assets/js/4.db34cb2c.js"><link rel="prefetch" href="/db_project-manager/assets/js/40.03a8286c.js"><link rel="prefetch" href="/db_project-manager/assets/js/41.b559b8f8.js"><link rel="prefetch" href="/db_project-manager/assets/js/5.5a26b30c.js"><link rel="prefetch" href="/db_project-manager/assets/js/6.5ed836b2.js"><link rel="prefetch" href="/db_project-manager/assets/js/7.c9ef2030.js"><link rel="prefetch" href="/db_project-manager/assets/js/8.e5f10b04.js"><link rel="prefetch" href="/db_project-manager/assets/js/9.25bc86e3.js"><link rel="prefetch" href="/db_project-manager/assets/js/vendors~docsearch.79583025.js">
+    <link rel="stylesheet" href="/db_project-manager/assets/css/0.styles.9f24b5cb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/db_project-manager/" class="home-link router-link-active"><!----> <span class="site-name">4. Система управління проектами</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/db_project-manager/" class="nav-link">
+  Початок
+</a></div> <a href="https://github.com/stbestichhh/db_project-manager" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/db_project-manager/" class="nav-link">
+  Початок
+</a></div> <a href="https://github.com/stbestichhh/db_project-manager" target="_blank" rel="noopener noreferrer" class="repo-link">
+    Github
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/db_project-manager/intro/" class="sidebar-link">Вступ</a></li><li><section class="sidebar-group collapsable depth-0"><a href="/db_project-manager/requirements/" class="sidebar-heading clickable"><span>Розроблення загальних вимог до системи</span> <span class="arrow right"></span></a> <!----></section></li><li><a href="/db_project-manager/use%20cases/" class="sidebar-link">Розроблення вимог до функціональности системи</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db_project-manager/use%20cases/#схеми" class="sidebar-link">Схеми</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db_project-manager/use%20cases/#загальна-схема" class="sidebar-link">Загальна схема</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/use%20cases/#колаборатор" class="sidebar-link">Колаборатор</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/use%20cases/#тімлід" class="sidebar-link">Тімлід</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/use%20cases/#адміністратор" class="sidebar-link">Адміністратор</a></li></ul></li><li class="sidebar-sub-header"><a href="/db_project-manager/use%20cases/#сценаріі-використання" class="sidebar-link">Сценарії використання</a></li></ul></li><li><a href="/db_project-manager/design/" class="sidebar-link">Проектування інформаційного забезпечення</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db_project-manager/design/#модель-бізнес-об-єктів" class="sidebar-link">Модель бізнес-об'єктів</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/design/#er-модель" class="sidebar-link">ER-модель</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/design/#реляціина-схема" class="sidebar-link">Реляційна схема</a></li></ul></li><li><a href="/db_project-manager/software/" aria-current="page" class="active sidebar-link">Реалізація інформаційного та програмного забезпечення</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db_project-manager/software/#sql-скрипт-для-створення-на-початкового-наповнення-бази-даних" class="sidebar-link">SQL-скрипт для створення на початкового наповнення бази даних</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#restfull-сервіс-для-управління-даними" class="sidebar-link">RESTfull сервіс для управління даними</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db_project-manager/software/#клас-запуску-проекту" class="sidebar-link">Клас запуску проекту</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#апі-контролер-для-комунікаціі-з-функіоналом-для-користувачів" class="sidebar-link">Апі контролер для комунікації з функіоналом для користувачів</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#апі-контролер-для-комунікаціі-з-функіоналом-для-завдань" class="sidebar-link">Апі контролер для комунікації з функіоналом для завдань</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#ексепшини-проекта" class="sidebar-link">Ексепшини проекта</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#реквести-та-респонси" class="sidebar-link">Реквести та респонси</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#обєкти-головних-сутностеи-в-базі-даних" class="sidebar-link">Обєкти головних сутностей в базі даних</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#репозиторіі-для-комунікаціі-з-бд" class="sidebar-link">Репозиторії для комунікації з бд</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#сервіс-для-бізнес-логіки-щодо-користувачів" class="sidebar-link">Сервіс для бізнес логіки щодо користувачів</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#сервіс-для-бізнес-логіки-щодо-завдань" class="sidebar-link">Сервіс для бізнес логіки щодо завдань</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#валідатор" class="sidebar-link">Валідатор</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/software/#конфігурація-бази-даних" class="sidebar-link">Конфігурація бази даних</a></li></ul></li></ul></li><li><a href="/db_project-manager/test/" class="sidebar-link">Тестування працездатності системи</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db_project-manager/test/#post-user" class="sidebar-link">POST - User</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/test/#put-user" class="sidebar-link">PUT - User</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/test/#delete-user" class="sidebar-link">DELETE - User</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/test/#post-task" class="sidebar-link">POST - Task</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/test/#put-task" class="sidebar-link">PUT - Task</a></li><li class="sidebar-sub-header"><a href="/db_project-manager/test/#delete-task" class="sidebar-link">DELETE - Task</a></li></ul></li><li><a href="/db_project-manager/conclusion/" class="sidebar-link">Висновки</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="реалізація-інформаціиного-та-програмного-забезпечення"><a href="#реалізація-інформаціиного-та-програмного-забезпечення" class="header-anchor">#</a> Реалізація інформаційного та програмного забезпечення</h1> <h2 id="sql-скрипт-для-створення-на-початкового-наповнення-бази-даних"><a href="#sql-скрипт-для-створення-на-початкового-наповнення-бази-даних" class="header-anchor">#</a> SQL-скрипт для створення на початкового наповнення бази даних</h2> <div class="language-mysql extra-class"><pre class="language-text"><code>-- MySQL Script generated by MySQL Workbench
+-- Fri Nov 10 19:30:08 2023
+-- Model: New Model    Version: 1.0
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `mydb` ;
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`User`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`User` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nickname` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar` VARCHAR(255) NULL,
+  `blockStatus` TINYINT NULL,
+  PRIMARY KEY (`id`));
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Role` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Role` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Project`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Project` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Project` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `manager` VARCHAR(255) NOT NULL,
+  `isArchived` TINYINT NULL,
+  PRIMARY KEY (`id`));
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Team`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Team` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Team` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `Project_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Team_Project1`
+    FOREIGN KEY (`Project_id`)
+    REFERENCES `mydb`.`Project` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE INDEX `fk_Team_Project1_idx` ON `mydb`.`Team` (`Project_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Collaborator`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Collaborator` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Collaborator` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `User_id` INT NOT NULL,
+  `Role_id` INT NOT NULL,
+  `Team_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Collaborator_User`
+    FOREIGN KEY (`User_id`)
+    REFERENCES `mydb`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Collaborator_Role1`
+    FOREIGN KEY (`Role_id`)
+    REFERENCES `mydb`.`Role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Collaborator_Team1`
+    FOREIGN KEY (`Team_id`)
+    REFERENCES `mydb`.`Team` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE INDEX `fk_Collaborator_User_idx` ON `mydb`.`Collaborator` (`User_id` ASC) VISIBLE;
+
+CREATE INDEX `fk_Collaborator_Role1_idx` ON `mydb`.`Collaborator` (`Role_id` ASC) VISIBLE;
+
+CREATE INDEX `fk_Collaborator_Team1_idx` ON `mydb`.`Collaborator` (`Team_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Permission`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Permission` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Permission` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`));
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Grant`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Grant` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Grant` (
+  `Permission_id` INT NOT NULL,
+  `Role_id` INT NOT NULL,
+  CONSTRAINT `fk_Grant_Permission1`
+    FOREIGN KEY (`Permission_id`)
+    REFERENCES `mydb`.`Permission` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Grant_Role1`
+    FOREIGN KEY (`Role_id`)
+    REFERENCES `mydb`.`Role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE INDEX `fk_Grant_Permission1_idx` ON `mydb`.`Grant` (`Permission_id` ASC) VISIBLE;
+
+CREATE INDEX `fk_Grant_Role1_idx` ON `mydb`.`Grant` (`Role_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Task`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Task` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Task` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `deadline` DATETIME NULL,
+  `priority` VARCHAR(45) NULL,
+  `difficulty` VARCHAR(45) NULL,
+  `Project_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Task_Project1`
+    FOREIGN KEY (`Project_id`)
+    REFERENCES `mydb`.`Project` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE INDEX `fk_Task_Project1_idx` ON `mydb`.`Task` (`Project_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Assignment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Assignment` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Assignment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `datetime` DATETIME NOT NULL,
+  `Task_id` INT NOT NULL,
+  `Collaborator_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_Assignment_Task1`
+    FOREIGN KEY (`Task_id`)
+    REFERENCES `mydb`.`Task` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Assignment_Collaborator1`
+    FOREIGN KEY (`Collaborator_id`)
+    REFERENCES `mydb`.`Collaborator` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE INDEX `fk_Assignment_Task1_idx` ON `mydb`.`Assignment` (`Task_id` ASC) VISIBLE;
+
+CREATE INDEX `fk_Assignment_Collaborator1_idx` ON `mydb`.`Assignment` (`Collaborator_id` ASC) VISIBLE;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- Test Data
+
+-- Adding into `mydb`.`Role`
+INSERT INTO `mydb`.`Role` (`name`)
+VALUES
+    ('Administrator'),
+    ('Team-lead'),
+    ('Collaborator');
+
+-- Adding into `mydb`.`Permission`
+INSERT INTO `mydb`.`Permission` (`role`, `name`)
+VALUES        
+    ('Team-lead', 'EditProfile'),
+    ('Team-lead', 'CreateTask'),
+    ('Team-lead', 'EditTask'),
+    ('Team-lead', 'DeleteTask'),            
+    ('Team-lead', 'CreateProject'),
+    ('Team-lead', 'EditProject'),
+    ('Team-lead', 'DeleteProject'),    
+    ('Team-lead', 'ArchiveProject'),    
+    ('Team-laed', 'AddCollaborator'),
+    ('Team-lead', 'DeleteCollaborator'),
+        
+    ('Collaborator', 'EditProfile'),
+    ('Collaborator', 'CreateTask'),
+    ('Collaborator', 'EditTask'),
+    ('Collaborator', 'DeleteTask'),
+    
+    ('Administrator', 'AssignManager'),
+    ('Administrator', 'BanUser'),
+    ('Administrator', 'UnBanUser');
+    ('Administrator', 'Support');
+
+-- Adding into `mydb`.`Grant`
+INSERT INTO `db_coursework`.`Grant` (`Permission_id`, `Role_id`)
+VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+
+    (2, 1),
+    (2, 2),
+
+    (3, 1),
+    (3, 2),
+
+    (4, 1),
+    (4, 2),
+    
+    (5, 1),    
+
+    (6, 1),    
+
+    (7, 1),
+
+    (8, 1),
+
+    (9, 1),
+
+    (10, 1),
+
+    (11, 3),
+
+    (12, 3),
+
+    (13, 3),    
+
+    (14, 3),    
+
+
+-- Adding into `mydb`.`Project`
+INSERT INTO `mydb`.`Project` (`name`, `description`, `manager`, `isArchived`)
+VALUES
+    ('Project_0', 'Description_0', 'Team-lead_0', 'false'),
+    ('Project_1', 'Description_1', 'Team-lead_1', 'true'),
+
+-- Додавання даних в таблицю `mydb`.`Team`
+INSERT INTO `db_coursework`.`Team` (`name`, `Project_id`)
+VALUES
+    ('Team_0', 'Project_0'),
+    ('Team_1', 'Project_1'),
+
+-- Adding into `mydb`.`User`
+INSERT INTO `db_coursework`.`User` (`nickname`, `email`, `password`, `avatar`, `blockStatus`)
+VALUES
+    ('User_0', 'user_0@mail.com', 'password_0', './photo', false),
+    ('User_1', 'user_1@mail.com', 'password_1', './photo', true);
+
+-- Adding into `mydb`.`Collaborator`
+INSERT INTO `mydb`.`Collaborator` ( `User_id`, `Role_id`, `Team_id`)
+VALUES
+    ('0', '0', '0'),
+    ('1', '1', '1'),
+
+
+-- Adding into ` `mydb`.`Task`
+INSERT INTO `mydb`.`Task` (`name`, `description`, `deadline`, `priority`, `difficulty`, `Project_id`)
+VALUES
+    ('Task_0', 'Description_0', '01-01-2023 12:00:00', 'High', 'Low', 'Project_0'),    
+    ('Task_1``, 'Description_1', '01-01-2023 12:00:00', 'Low', 'High', 'Project_1'),    
+
+-- Adding into `mydb`.`Assignment`
+INSERT INTO `mydb`.`Assignment` (`datetime`, `Task_id`, `Collaborator_id`)
+VALUES
+    ('2023-01-01 12:00:00', 0, 0),
+    ('2023-01-01 12:00:00', 1, 1),    
+
+
+COMMIT;
+
+</code></pre></div><h2 id="restfull-сервіс-для-управління-даними"><a href="#restfull-сервіс-для-управління-даними" class="header-anchor">#</a> RESTfull сервіс для управління даними</h2> <h3 id="клас-запуску-проекту"><a href="#клас-запуску-проекту" class="header-anchor">#</a> Клас запуску проекту</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FlowlyApplication</span> <span class="token punctuation">{</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">FlowlyApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="апі-контролер-для-комунікаціі-з-функіоналом-для-користувачів"><a href="#апі-контролер-для-комунікаціі-з-функіоналом-для-користувачів" class="header-anchor">#</a> Апі контролер для комунікації з функіоналом для користувачів</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">&quot;/api/v1/users&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserController</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">UserService</span> userService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">UserController</span><span class="token punctuation">(</span><span class="token class-name">UserService</span> userService<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>userService <span class="token operator">=</span> userService<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@PostMapping</span>
+    <span class="token keyword">public</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> <span class="token function">registerUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token class-name">RegisterRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>userService<span class="token punctuation">.</span><span class="token function">registerUser</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">HttpStatus</span><span class="token punctuation">.</span><span class="token constant">CREATED</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@PutMapping</span>
+    <span class="token keyword">public</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> <span class="token function">updateUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token class-name">UserUpdateRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>userService<span class="token punctuation">.</span><span class="token function">updateUser</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">HttpStatus</span><span class="token punctuation">.</span><span class="token constant">OK</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@DeleteMapping</span><span class="token punctuation">(</span><span class="token string">&quot;/{userId}&quot;</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@ResponseStatus</span><span class="token punctuation">(</span><span class="token class-name">HttpStatus</span><span class="token punctuation">.</span><span class="token constant">NO_CONTENT</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span> <span class="token class-name">Long</span> userId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        userService<span class="token punctuation">.</span><span class="token function">deleteUser</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="апі-контролер-для-комунікаціі-з-функіоналом-для-завдань"><a href="#апі-контролер-для-комунікаціі-з-функіоналом-для-завдань" class="header-anchor">#</a> Апі контролер для комунікації з функіоналом для завдань</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">&quot;/api/v1/tasks&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskController</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">TaskService</span> taskService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">TaskController</span><span class="token punctuation">(</span><span class="token class-name">TaskService</span> taskService<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>taskService <span class="token operator">=</span> taskService<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@PostMapping</span>
+    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">createTask</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token class-name">TaskCreationRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> taskService<span class="token punctuation">.</span><span class="token function">createTask</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@PutMapping</span>
+    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">updateTask</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token class-name">TaskUpdateRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> taskService<span class="token punctuation">.</span><span class="token function">updateTask</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@DeleteMapping</span><span class="token punctuation">(</span><span class="token string">&quot;/{taskId}&quot;</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@ResponseStatus</span><span class="token punctuation">(</span><span class="token class-name">HttpStatus</span><span class="token punctuation">.</span><span class="token constant">NO_CONTENT</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteTask</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span> <span class="token class-name">Long</span> taskId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        taskService<span class="token punctuation">.</span><span class="token function">deleteTask</span><span class="token punctuation">(</span>taskId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="ексепшини-проекта"><a href="#ексепшини-проекта" class="header-anchor">#</a> Ексепшини проекта</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">IncorrectOldPasswordValidationException</span> <span class="token keyword">extends</span> <span class="token class-name">RuntimeException</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token class-name">IncorrectOldPasswordValidationException</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskNotFoundException</span> <span class="token keyword">extends</span> <span class="token class-name">RuntimeException</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token class-name">TaskNotFoundException</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserNotFoundException</span> <span class="token keyword">extends</span> <span class="token class-name">RuntimeException</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token class-name">UserNotFoundException</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="реквести-та-респонси"><a href="#реквести-та-респонси" class="header-anchor">#</a> Реквести та респонси</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">record</span> <span class="token class-name">RegisterRequest</span><span class="token punctuation">(</span><span class="token class-name">String</span> username<span class="token punctuation">,</span> <span class="token class-name">String</span> password<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">record</span> <span class="token class-name">UserUpdateRequest</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">,</span> <span class="token class-name">String</span> username<span class="token punctuation">,</span> <span class="token class-name">String</span> newPassword<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">record</span> <span class="token class-name">TaskCreationRequest</span><span class="token punctuation">(</span><span class="token class-name">String</span> title<span class="token punctuation">,</span> <span class="token class-name">String</span> description<span class="token punctuation">,</span> <span class="token class-name">Long</span> reporterId<span class="token punctuation">,</span> <span class="token class-name">Long</span> assigneeId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">record</span> <span class="token class-name">TaskUpdateRequest</span><span class="token punctuation">(</span><span class="token class-name">Long</span> taskId<span class="token punctuation">,</span> <span class="token class-name">String</span> title<span class="token punctuation">,</span> <span class="token class-name">String</span> description<span class="token punctuation">,</span> <span class="token class-name">Long</span> assigneeId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="обєкти-головних-сутностеи-в-базі-даних"><a href="#обєкти-головних-сутностеи-в-базі-даних" class="header-anchor">#</a> Обєкти головних сутностей в базі даних</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Entity</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@Builder</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Task</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Id</span>
+    <span class="token annotation punctuation">@GeneratedValue</span><span class="token punctuation">(</span>strategy <span class="token operator">=</span> <span class="token class-name">GenerationType</span><span class="token punctuation">.</span><span class="token constant">IDENTITY</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> title<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> description<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@ManyToOne</span><span class="token punctuation">(</span>cascade <span class="token operator">=</span> <span class="token class-name">CascadeType</span><span class="token punctuation">.</span><span class="token constant">PERSIST</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">User</span> reporter<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@ManyToOne</span><span class="token punctuation">(</span>cascade <span class="token operator">=</span> <span class="token class-name">CascadeType</span><span class="token punctuation">.</span><span class="token constant">PERSIST</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">User</span> assignees<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@OneToMany</span>
+    <span class="token keyword">private</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TaskComment</span><span class="token punctuation">&gt;</span></span> comments<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Entity</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@Builder</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskComment</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Id</span>
+    <span class="token annotation punctuation">@GeneratedValue</span><span class="token punctuation">(</span>strategy <span class="token operator">=</span> <span class="token class-name">GenerationType</span><span class="token punctuation">.</span><span class="token constant">IDENTITY</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> message<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@ManyToOne</span><span class="token punctuation">(</span>cascade <span class="token operator">=</span> <span class="token class-name">CascadeType</span><span class="token punctuation">.</span><span class="token constant">PERSIST</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Task</span> task<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Entity</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@Builder</span>
+<span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">&quot;users&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Id</span>
+    <span class="token annotation punctuation">@GeneratedValue</span><span class="token punctuation">(</span>strategy <span class="token operator">=</span> <span class="token class-name">GenerationType</span><span class="token punctuation">.</span><span class="token constant">IDENTITY</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> username<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> password<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@OneToMany</span><span class="token punctuation">(</span>mappedBy <span class="token operator">=</span> <span class="token string">&quot;reporter&quot;</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Task</span><span class="token punctuation">&gt;</span></span> reportedTasks<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@ManyToMany</span>
+    <span class="token keyword">private</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Task</span><span class="token punctuation">&gt;</span></span> assignedTasks<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="репозиторіі-для-комунікаціі-з-бд"><a href="#репозиторіі-для-комунікаціі-з-бд" class="header-anchor">#</a> Репозиторії для комунікації з бд</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TaskRepository</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Task</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserRepository</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">,</span> <span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="сервіс-для-бізнес-логіки-щодо-користувачів"><a href="#сервіс-для-бізнес-логіки-щодо-користувачів" class="header-anchor">#</a> Сервіс для бізнес логіки щодо користувачів</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+    <span class="token class-name">User</span> <span class="token function">getUserById</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Long</span> <span class="token function">registerUser</span><span class="token punctuation">(</span><span class="token class-name">RegisterRequest</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Long</span> <span class="token function">updateUser</span><span class="token punctuation">(</span><span class="token class-name">UserUpdateRequest</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">deleteUser</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">UserRepository</span> userRepository<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ValidatorService</span> validatorService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">UserServiceImpl</span><span class="token punctuation">(</span><span class="token class-name">UserRepository</span> userRepository<span class="token punctuation">,</span> <span class="token class-name">ValidatorService</span> validatorService<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>userRepository <span class="token operator">=</span> userRepository<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>validatorService <span class="token operator">=</span> validatorService<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">User</span> <span class="token function">getUserById</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">getUserOrThrowException</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">registerUser</span><span class="token punctuation">(</span><span class="token class-name">RegisterRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">username</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">username</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">password</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">password</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// should be encrypted</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">updateUser</span><span class="token punctuation">(</span><span class="token class-name">UserUpdateRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">User</span> userToBeUpdated <span class="token operator">=</span> <span class="token function">getUserOrThrowException</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">userId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>validatorService<span class="token punctuation">.</span><span class="token function">validateOldUserPassword</span><span class="token punctuation">(</span>userToBeUpdated<span class="token punctuation">,</span> request<span class="token punctuation">.</span><span class="token function">newPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IncorrectOldPasswordValidationException</span><span class="token punctuation">(</span><span class="token string">&quot;You have entered incorrect old password&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        userToBeUpdated<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">username</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        userToBeUpdated<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">newPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>userToBeUpdated<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteUser</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        userRepository<span class="token punctuation">.</span><span class="token function">deleteById</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">User</span> <span class="token function">getUserOrThrowException</span><span class="token punctuation">(</span><span class="token class-name">Long</span> userId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> userRepository<span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">orElseThrow</span><span class="token punctuation">(</span>
+                <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token keyword">new</span> <span class="token class-name">UserNotFoundException</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">&quot;User with id:%d was not found&quot;</span><span class="token punctuation">,</span> userId<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="сервіс-для-бізнес-логіки-щодо-завдань"><a href="#сервіс-для-бізнес-логіки-щодо-завдань" class="header-anchor">#</a> Сервіс для бізнес логіки щодо завдань</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TaskService</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Long</span> <span class="token function">createTask</span><span class="token punctuation">(</span><span class="token class-name">TaskCreationRequest</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Long</span> <span class="token function">updateTask</span><span class="token punctuation">(</span><span class="token class-name">TaskUpdateRequest</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">deleteTask</span><span class="token punctuation">(</span><span class="token class-name">Long</span> taskId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">TaskService</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">TaskRepository</span> taskRepository<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">UserService</span> userService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">TaskServiceImpl</span><span class="token punctuation">(</span><span class="token class-name">TaskRepository</span> taskRepository<span class="token punctuation">,</span> <span class="token class-name">UserService</span> userService<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>taskRepository <span class="token operator">=</span> taskRepository<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>userService    <span class="token operator">=</span> userService<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">createTask</span><span class="token punctuation">(</span><span class="token class-name">TaskCreationRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">User</span> reporter <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">getUserById</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">reporterId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">User</span> assignee <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">getUserById</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">assigneeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">Task</span> taskToBeCreated <span class="token operator">=</span> <span class="token class-name">Task</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">title</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">title</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">description</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">description</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">reporter</span><span class="token punctuation">(</span>reporter<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">assignees</span><span class="token punctuation">(</span>assignee<span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> taskRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>taskToBeCreated<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">updateTask</span><span class="token punctuation">(</span><span class="token class-name">TaskUpdateRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Task</span> taskToBeUpdated <span class="token operator">=</span> <span class="token function">getTaskOrThrowException</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">taskId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">User</span> assignedUser <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">getUserById</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">assigneeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        taskToBeUpdated<span class="token punctuation">.</span><span class="token function">setDescription</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">description</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        taskToBeUpdated<span class="token punctuation">.</span><span class="token function">setAssignees</span><span class="token punctuation">(</span>assignedUser<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        taskToBeUpdated<span class="token punctuation">.</span><span class="token function">setTitle</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">title</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> taskRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>taskToBeUpdated<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteTask</span><span class="token punctuation">(</span><span class="token class-name">Long</span> taskId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        taskRepository<span class="token punctuation">.</span><span class="token function">deleteById</span><span class="token punctuation">(</span>taskId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">Task</span> <span class="token function">getTaskOrThrowException</span><span class="token punctuation">(</span><span class="token class-name">Long</span> taskId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> taskRepository<span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span>taskId<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">orElseThrow</span><span class="token punctuation">(</span>
+                <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token keyword">new</span> <span class="token class-name">TaskNotFoundException</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">&quot;Task with id:%d was not found&quot;</span><span class="token punctuation">,</span> taskId<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="валідатор"><a href="#валідатор" class="header-anchor">#</a> Валідатор</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ValidatorService</span> <span class="token punctuation">{</span>
+    <span class="token keyword">boolean</span> <span class="token function">validateOldUserPassword</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">String</span> newPassword<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ValidatorServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">ValidatorService</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">validateOldUserPassword</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">String</span> newPassword<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> hashedPassword <span class="token operator">=</span> newPassword<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> hashedPassword<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="конфігурація-бази-даних"><a href="#конфігурація-бази-даних" class="header-anchor">#</a> Конфігурація бази даних</h3> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+    <span class="token key atrule">datasource</span><span class="token punctuation">:</span>
+        <span class="token key atrule">url</span><span class="token punctuation">:</span> <span class="token string">&quot;jdbc:postgresql://localhost:5432/max&quot;</span>
+        <span class="token key atrule">username</span><span class="token punctuation">:</span> <span class="token string">&quot;postgres&quot;</span>
+        <span class="token key atrule">password</span><span class="token punctuation">:</span> <span class="token string">&quot;1111&quot;</span>
+    <span class="token key atrule">jpa</span><span class="token punctuation">:</span>
+        <span class="token key atrule">hibernate</span><span class="token punctuation">:</span>
+            <span class="token key atrule">ddl-auto</span><span class="token punctuation">:</span> create<span class="token punctuation">-</span>drop
+        <span class="token key atrule">show-sql</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">properties</span><span class="token punctuation">:</span>
+            <span class="token key atrule">hibernate</span><span class="token punctuation">:</span>
+                <span class="token key atrule">dialect</span><span class="token punctuation">:</span> <span class="token string">&quot;org.hibernate.dialect.PostgreSQLDialect&quot;</span>
+                <span class="token key atrule">format_sql</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+                <span class="token key atrule">globally_quoted_identifiers</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Останнє оновлення:</span> <span class="time">12/9/2023, 12:45:27 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/db_project-manager/design/" class="prev">
+        Проектування інформаційного забезпечення
+      </a></span> <span class="next"><a href="/db_project-manager/test/">
+        Тестування працездатності системи
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/db_project-manager/assets/js/app.ef185940.js" defer></script><script src="/db_project-manager/assets/js/2.719a43ec.js" defer></script><script src="/db_project-manager/assets/js/1.a1a589e3.js" defer></script><script src="/db_project-manager/assets/js/38.c9dbd3bf.js" defer></script>
+  </body>
+</html>
