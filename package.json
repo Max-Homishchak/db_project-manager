@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "main": "index.js",
   "description": "Databases labs",
-  "repository": "https://github.com/Max-Homishchak/db_project-manager-Maksym-Khomishchak",
+  "repository": "https://github.com/Max-Homishchak/db_project-manager",
   "author": "Maksym Khomishchak <maksymhomisak813@gmail.com>",
   "license": "ECL 2.0",
   "scripts": {
