@@ -3,13 +3,13 @@
   "version": "2.1.0",
   "main": "index.js",
   "description": "Databases labs",
-  "repository": "https://github.com/Max-Homishchak/db_project-manager-Maksym-Khomishchak",
+  "repository": "https://github.com/Max-Homishchak/db_project-manager",
   "author": "Maksym Khomishchak <maksymhomisak813@gmail.com>",
   "license": "ECL 2.0",
   "scripts": {
     "docs:dev": "npx vuepress dev docs",
     "docs:build": "npx vuepress build docs",
-    "publish": "sh publish.sh"
+    "publish": "sh /Users/max/Desktop/db_project-manager/publish.sh"
   },
   "dependencies": {
     "@vuepress/plugin-back-to-top": "^1.7.1",
